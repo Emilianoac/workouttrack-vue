@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  import DefaultLayout from "@/layouts/DefaultLayout.vue";
-  import Toploader from "@/components/TopLoader.vue";
+  import { useDark } from "@vueuse/core";
+  import Toploader from "@/components/Shared/TopLoader.vue";
+
+  useDark();
 </script>
 
 <template>
   <Toploader />
-  <DefaultLayout>
-    <RouterView />
-  </DefaultLayout>
+  <RouterView />
 </template>
 
 <style scoped></style>
