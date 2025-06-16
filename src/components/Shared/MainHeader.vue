@@ -18,7 +18,7 @@
 <template>
   <header class="header">
     <router-link to="/" aria-label="Inicio">
-      <SiteBrand class="w-40 h-auto" />
+      <SiteBrand class="w-48 h-auto" />
     </router-link>
 
     <div class="flex space-x-4" role="toolbar" aria-label="Opciones de usuario">
