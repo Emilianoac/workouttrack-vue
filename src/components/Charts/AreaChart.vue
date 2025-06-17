@@ -3,7 +3,6 @@
   import { useDark } from "@vueuse/core";
   import es from "apexcharts/dist/locales/es.json";
   import ApexCharts from "vue3-apexcharts";
-  import Sekeleton from "@/components/Skeletons/Skeleton.vue";
   import type { ApexOptions } from "apexcharts";
 
   const props = defineProps<{
@@ -55,9 +54,7 @@
   });
 
   watch(isDark, (value, oldValue) => {
-    if (value !== oldValue) {
-      chart.value?.updateOptions({ theme: { mode: value ? "dark" : "light" } });
-    }
+    if (value !== oldValue) chart.value?.updateOptions({ theme: { mode: value ? "dark" : "light" } });
   });
 
   watch(
@@ -71,8 +68,7 @@
 
 <template>
   <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md mb-5 border border-gray-200 dark:border-slate-700 p-4">
-    <Sekeleton width="100%" height="200px" v-if="isLoading" />
-    <p v-else-if="error.isError" class="text-red-500 text-center p-8">{{ error.message }}</p>
+    <p v-if="error.isError" class="text-red-500 text-center p-8">{{ error.message }}</p>
     <ApexCharts v-else ref="chart" width="100%" height="200" type="area" :series="[series]" :options="chartOptions" />
   </div>
 </template>
