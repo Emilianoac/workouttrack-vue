@@ -1,26 +1,31 @@
 <script lang="ts" setup>
-  import { onMounted, ref } from "vue";
+  import { onMounted, ref, reactive, watch } from "vue";
   import { useRouter } from "vue-router";
+  import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/useAuth";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
   import { getAuthErrorMessage } from "@/errors/authMessages";
+  import { resetPasswordSchema } from "@/schemas/authSchema";
   import Alert from "@/components/Shared/Alert.vue";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
 
   const router = useRouter();
   const { isLoading, updatePassword, signOut } = useAuth();
-  const newPassword = ref("");
+  const { validate, formFieldsErrors } = useFormValidation();
+
+  const formData = reactive({ password: "" });
   const error = ref<string | null>(null);
+  const isSubmitted = ref(false);
+
   const success = ref<string | null>(null);
 
   async function handleChangePassword() {
-    if (!newPassword.value) {
-      error.value = "Por favor, ingresa una nueva contraseña.";
-      return;
-    }
+    error.value = null;
+    isSubmitted.value = true;
+    if (!validate(resetPasswordSchema, formData)) return;
 
     try {
-      await updatePassword(newPassword.value);
+      await updatePassword(formData.password);
       success.value = "Contraseña cambiada exitosamente.";
 
       setTimeout(() => {
@@ -38,6 +43,17 @@
   onMounted(async () => {
     window.history.replaceState({}, document.title, window.location.pathname);
   });
+
+  watch(
+    () => formData,
+    (newValue) => {
+      if (isSubmitted.value) {
+        validate(resetPasswordSchema, newValue);
+        error.value = null;
+      }
+    },
+    { deep: true },
+  );
 </script>
 
 <template>
@@ -55,8 +71,13 @@
         class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white"
         type="password"
         placeholder="Tu correo electrónico"
-        v-model="newPassword"
+        v-model="formData.password"
       />
+      <template v-if="formFieldsErrors?.password">
+        <p v-for="error in formFieldsErrors.password.errors" :key="error" class="text-red-600 text-sm mt-1">
+          {{ error }}
+        </p>
+      </template>
     </div>
 
     <!-- Submit Button -->

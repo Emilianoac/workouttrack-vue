@@ -1,30 +1,47 @@
 <script lang="ts" setup>
-  import { ref } from "vue";
+  import { ref, reactive, watch } from "vue";
+  import { registerSchema, type RegisterSchema } from "@/schemas/authSchema";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
   import { getAuthErrorMessage } from "@/errors/authMessages";
+  import { useFormValidation } from "@/composables/useFormValidation";
+
   import { useAuth } from "@/composables/useAuth";
   import Alert from "@/components/Shared/Alert.vue";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
 
   const { signUpWithEmail, isLoading } = useAuth();
+  const { validate, formFieldsErrors } = useFormValidation();
 
-  const email = ref("");
-  const password = ref("");
+  const formData = reactive<RegisterSchema>({
+    email: "",
+    password: "",
+  });
+  const isSubmitted = ref(false);
   const error = ref<string | null>(null);
 
   async function handleLogin() {
-    if (!email.value || !password.value) {
-      error.value = "Ingresa un correo electrónico y una contraseña válidos.";
-      return;
-    }
+    isSubmitted.value = true;
+    error.value = null;
+    if (!validate(registerSchema, formData)) return;
 
     try {
-      await signUpWithEmail(email.value, password.value);
+      await signUpWithEmail(formData.email, formData.password);
     } catch (err) {
       const code = mapSupabaseError(err);
       error.value = getAuthErrorMessage(code);
     }
   }
+
+  watch(
+    () => formData,
+    (newValue) => {
+      if (isSubmitted.value) {
+        validate(registerSchema, newValue);
+        error.value = null;
+      }
+    },
+    { deep: true },
+  );
 </script>
 
 <template>
@@ -39,8 +56,13 @@
         class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white"
         type="email"
         placeholder="Tu correo electrónico"
-        v-model="email"
+        v-model="formData.email"
       />
+      <template v-if="isSubmitted && formFieldsErrors?.email">
+        <p v-for="error in formFieldsErrors.email.errors" class="text-red-500 text-sm mt-1" :key="error">
+          {{ error }}
+        </p>
+      </template>
     </div>
 
     <!-- Password -->
@@ -50,8 +72,13 @@
         class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white"
         type="password"
         placeholder="Tu contraseña"
-        v-model="password"
+        v-model="formData.password"
       />
+      <template v-if="isSubmitted && formFieldsErrors?.password">
+        <p v-for="error in formFieldsErrors.password.errors" class="text-red-500 text-sm mt-1" :key="error">
+          {{ error }}
+        </p>
+      </template>
     </div>
 
     <!-- Submit Button -->

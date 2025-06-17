@@ -1,33 +1,45 @@
 <script lang="ts" setup>
-  import { ref } from "vue";
+  import { ref, reactive, watch } from "vue";
+  import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/useAuth";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
   import { getAuthErrorMessage } from "@/errors/authMessages";
+  import { forgotPasswordSchema } from "@/schemas/authSchema";
   import Alert from "@/components/Shared/Alert.vue";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
 
   const { isLoading, sendResetPasswordEmail } = useAuth();
+  const { validate, formFieldsErrors } = useFormValidation();
 
-  const email = ref("");
+  const formData = reactive({ email: "" });
   const error = ref<string | null>(null);
+  const isSubmitted = ref(false);
   const success = ref<string | null>(null);
 
   async function handleResetPassword() {
     error.value = null;
-    if (!email.value) {
-      error.value = "Ingresa un correo electrónico válido.";
-      return;
-    }
+    isSubmitted.value = true;
+    if (!validate(forgotPasswordSchema, formData)) return;
 
     try {
-      await sendResetPasswordEmail(email.value);
-
+      await sendResetPasswordEmail(formData.email);
       success.value = "Se ha enviado un enlace de restablecimiento a tu correo electrónico.";
     } catch (err) {
       const code = mapSupabaseError(err);
       error.value = getAuthErrorMessage(code);
     }
   }
+
+  watch(
+    () => formData,
+    (newValue) => {
+      if (isSubmitted.value) {
+        validate(forgotPasswordSchema, newValue);
+        error.value = null;
+      }
+    },
+    { deep: true },
+  );
 </script>
 
 <template>
@@ -45,14 +57,19 @@
         class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white"
         type="email"
         placeholder="Tu correo electrónico"
-        v-model="email"
+        v-model="formData.email"
       />
+      <template v-if="formFieldsErrors?.email">
+        <p v-for="error in formFieldsErrors.email.errors" :key="error" class="text-red-600 text-sm mt-1">
+          {{ error }}
+        </p>
+      </template>
     </div>
 
     <!-- Submit Button -->
     <div class="mt-6">
       <button
-        :disabled="!!success || isLoading"
+        :disabled="isLoading"
         class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
       >
         {{ isLoading ? "Enviando..." : "Enviar enlace de restablecimiento" }}
