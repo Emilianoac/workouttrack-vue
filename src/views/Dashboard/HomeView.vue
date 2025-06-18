@@ -14,7 +14,7 @@
 <template>
   <!-- Welcome Section -->
   <section class="mb-6">
-    <h1 class="text-3xl font-bold mb-4">Bienvenido Emiliano</h1>
+    <h1 class="text-3xl font-bold mb-4">Bienvenido</h1>
   </section>
 
   <!-- Body Weight Chart -->
