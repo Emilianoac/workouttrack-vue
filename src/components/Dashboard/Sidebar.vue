@@ -1,6 +1,10 @@
 <script lang="ts" setup>
   import { useRouter } from "vue-router";
 
+  defineOptions({
+    name: "SidebarComponent",
+  });
+
   const router = useRouter();
   const menuItems = router.getRoutes().filter((route) => {
     return route.meta.menu === true;
@@ -30,7 +34,7 @@
   .sidebar-container {
     @apply bg-white dark:bg-slate-800;
     @apply w-full h-screen overflow-x-hidden pt-4;
-    @apply absolute top-0 left-0 right-0  z-[1000];
+    @apply absolute top-0 left-0 right-0 z-[1000];
     @apply transition-all duration-300 ease-in-out;
     @apply border-r border-gray-200 dark:border-slate-700;
 
@@ -60,17 +64,7 @@
 
       .menu-item__label {
         @apply text-sm font-medium;
-        @apply whitespace-nowrap hidden;
-      }
-    }
-
-    &:hover {
-      width: 260px;
-      overflow-x: auto;
-
-      .menu-item__label {
-        @apply block;
-        width: 200px;
+        @apply whitespace-nowrap;
       }
     }
   }
