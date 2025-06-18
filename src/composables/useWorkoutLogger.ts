@@ -1,9 +1,13 @@
 import { ref } from "vue";
 import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/composables/useAuth";
+
 import type { RoutineExercise, Routine } from "@/types/routines";
 import type { NewSetLog } from "@/types/workoutLog";
 
 export default function useWorkoutLogger() {
+  const { user } = useAuth();
+
   const workoutDate = ref(new Date().toLocaleDateString("sv-SE"));
   const bodyWeight = ref(0);
   const selectedRoutineId = ref("");
@@ -39,6 +43,11 @@ export default function useWorkoutLogger() {
   }
 
   async function saveData() {
+    if (!user.value) {
+      alert("Debes iniciar sesión para guardar tu workout log.");
+      return;
+    }
+
     if (!selectedRoutineId.value) {
       alert("Selecciona una rutina antes de guardar.");
       return;
@@ -53,6 +62,7 @@ export default function useWorkoutLogger() {
           created_at: workoutDate.value,
           notes: null,
           body_weight_kg: bodyWeight.value,
+          user_id: user.value?.id,
         })
         .select()
         .single();

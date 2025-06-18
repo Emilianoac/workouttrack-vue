@@ -1,31 +1,44 @@
 import { ref, onMounted } from "vue";
 import { supabase } from "@/lib/supabaseClient";
 import type { Routine } from "@/types/routines";
+import { useAuth } from "@/composables/useAuth";
 
 export function useRoutine() {
   const routines = ref<Routine[]>([]);
+  const { user } = useAuth();
 
   async function fetchRoutines() {
     try {
-      const { data, error } = await supabase.from("routines").select(`
-        id,
-        name,
-        description,
-        routines_exercises (
+      if (!user.value) {
+        console.warn("No user logged in");
+        routines.value = [];
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("routines")
+        .select(
+          `
           id,
-          order,
-          sets,
-          reps,
-          duration_sec,
-          rest_seconds,
-          measurement,
-          exercise:exercises_id (
+          name,
+          description,
+          routines_exercises (
             id,
-            name,
-            image
+            order,
+            sets,
+            reps,
+            duration_sec,
+            rest_seconds,
+            measurement,
+            exercise:exercises_id (
+              id,
+              name,
+              image
+            )
           )
+        `,
         )
-      `);
+        .eq("user_id", user.value.id);
 
       if (error) throw new Error(error.message);
 
@@ -43,5 +56,6 @@ export function useRoutine() {
 
   return {
     routines,
+    fetchRoutines,
   };
 }
