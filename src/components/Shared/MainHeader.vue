@@ -1,18 +1,20 @@
 <script lang="ts" setup>
   import { useAuth } from "@/composables/useAuth";
-  import { useDark, useToggle } from "@vueuse/core";
-  import { useRouter } from "vue-router";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
-  const isDark = useDark();
-  const toggle = useToggle(isDark);
-  const { signOut, user } = useAuth();
+  import Dropdown from "@/components/Shared/Dropdown.vue";
+  import ThemeToogle from "@/components/Shared/ThemeToggle.vue";
 
-  const router = useRouter();
+  const { signOut, user } = useAuth();
 
   async function handleSignOut() {
     await signOut();
-    router.push({ name: "login" });
+    window.location.reload();
   }
+
+  const dropdownItems = [
+    { label: "Perfil", to: "/perfil", class: undefined },
+    { label: "Cerrar sesión", action: handleSignOut, class: "text-red-500" },
+  ];
 </script>
 
 <template>
@@ -22,34 +24,17 @@
     </router-link>
 
     <div class="flex space-x-4" role="toolbar" aria-label="Opciones de usuario">
-      <button @click="toggle()">Cambiar tema</button>
-
-      <!-- 👇 Mostrar solo si el usuario está logueado -->
-      <div v-if="user" class="relative">
-        <button class="rounded bg-slate-200 dark:bg-slate-700 px-3 py-1">
-          {{ user.email }}
-        </button>
-        <!-- Aquí podrías agregar un dropdown -->
-        <div class="absolute right-0 mt-2 w-40 bg-white dark:bg-slate-800 rounded shadow">
-          <button
-            @click="handleSignOut"
-            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      </div>
-
-      <!-- Si no está logueado, puedes mostrar botones de login/register -->
-      <div v-else>
-        <router-link to="/login" class="text-sm">Iniciar sesión</router-link>
-      </div>
+      <ThemeToogle class="w-8 h-8" />
+      <Dropdown v-if="user" :items="dropdownItems" title="Acciones" />
     </div>
   </header>
 </template>
 
 <style lang="postcss" scoped>
   .header {
-    @apply bg-white dark:bg-slate-800 px-2 py-3 flex justify-between items-center border-b border-gray-200 dark:border-slate-700;
+    @apply flex justify-between items-center;
+    @apply bg-white dark:bg-slate-800;
+    @apply px-4 py-3;
+    @apply border-b border-gray-200 dark:border-slate-700;
   }
 </style>
