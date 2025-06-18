@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { onMounted, ref, reactive, watch } from "vue";
-  import { useRouter } from "vue-router";
   import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/useAuth";
+  import { useRouter } from "vue-router";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
   import { getAuthErrorMessage } from "@/errors/authMessages";
   import { resetPasswordSchema } from "@/schemas/authSchema";
@@ -10,11 +10,12 @@
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
 
   const router = useRouter();
-  const { isLoading, updatePassword, signOut } = useAuth();
+  const { isLoading, updatePassword } = useAuth();
   const { validate, formFieldsErrors } = useFormValidation();
 
   const formData = reactive({ password: "" });
   const error = ref<string | null>(null);
+  const invalidUrl = ref(false);
   const isSubmitted = ref(false);
 
   const success = ref<string | null>(null);
@@ -28,12 +29,7 @@
       await updatePassword(formData.password);
       success.value = "Contraseña cambiada exitosamente.";
 
-      setTimeout(() => {
-        success.value = null;
-        error.value = null;
-        signOut();
-        router.push({ name: "login" });
-      }, 3000);
+      router.push("/");
     } catch (err) {
       const code = mapSupabaseError(err);
       error.value = getAuthErrorMessage(code);
@@ -41,7 +37,16 @@
   }
 
   onMounted(async () => {
-    window.history.replaceState({}, document.title, window.location.pathname);
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const accessToken = hashParams.get("access_token");
+    const type = hashParams.get("type");
+
+    if (!accessToken || type !== "recovery") {
+      invalidUrl.value = true;
+      error.value = "Este enlace no es válido. Solicita uno nuevo.";
+    } else {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   });
 
   watch(
@@ -68,9 +73,10 @@
     <div>
       <label class="block text-sm font-semibold mb-2">Nueva contraseña</label>
       <input
-        class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white"
+        class="border border-gray-300 dark:border-slate-600 rounded-lg p-2 w-full dark:bg-slate-700 dark:text-white disabled:opacity-50"
         type="password"
         placeholder="Tu correo electrónico"
+        :disabled="isLoading || invalidUrl"
         v-model="formData.password"
       />
       <template v-if="formFieldsErrors?.password">
@@ -83,11 +89,19 @@
     <!-- Submit Button -->
     <div class="mt-6">
       <button
-        :disabled="!!success || isLoading"
+        :disabled="!!success || isLoading || invalidUrl"
         class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
       >
         {{ isLoading ? "Cambiando..." : "Cambiar contraseña" }}
       </button>
+
+      <router-link
+        v-if="invalidUrl"
+        :to="{ name: 'login' }"
+        class="block text-center text-blue-600 hover:underline mt-4"
+      >
+        Volver al inicio de sesión
+      </router-link>
     </div>
 
     <Alert v-if="error" type="error" :message="error" class="text-sm mt-4" />
