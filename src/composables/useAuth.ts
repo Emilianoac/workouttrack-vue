@@ -23,29 +23,36 @@ supabase.auth.onAuthStateChange((event, session) => {
 export function useAuth() {
   async function signInWithEmail(email: string, password: string) {
     isLoading.value = true;
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    isLoading.value = false;
-    if (error) throw error;
-    user.value = data.user;
-    return data;
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      user.value = data.user;
+      return data;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function signUpWithEmail(email: string, password: string) {
     isLoading.value = true;
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    isLoading.value = false;
-    console.log("Sign up data:", data);
-    console.log("Sign up error:", error);
-    if (error) throw error;
-    return data;
+    try {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) throw error;
+      return data;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function signOut() {
     isLoading.value = true;
-    const { error } = await supabase.auth.signOut();
-    isLoading.value = false;
-    if (error) throw error;
-    user.value = null;
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      user.value = null;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function exchangeCodeForSession(url: string) {
@@ -55,20 +62,25 @@ export function useAuth() {
 
   async function sendResetPasswordEmail(email: string) {
     isLoading.value = true;
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/cambiar-contrasena`,
-    });
-    if (error) throw error;
-
-    isLoading.value = false;
-    return { success: true, message: "Password reset email sent." };
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/cambiar-contrasena`,
+      });
+      if (error) throw error;
+      return { success: true, message: "Password reset email sent." };
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function updatePassword(newPassword: string) {
     isLoading.value = true;
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) throw error;
-    isLoading.value = false;
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) throw error;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   function getSession() {
