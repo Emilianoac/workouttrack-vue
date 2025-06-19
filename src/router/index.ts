@@ -24,6 +24,7 @@ const router = createRouter({
           meta: {
             menu: true,
             label: "Inicio",
+            shortLabel: "Inicio",
             icon: HomeIcon,
           },
         },
@@ -34,6 +35,7 @@ const router = createRouter({
           meta: {
             menu: true,
             label: "Registrar Entrenamiento",
+            shortLabel: "Registrar",
             icon: RegisterWorkoutIcon,
           },
         },
@@ -44,6 +46,7 @@ const router = createRouter({
           meta: {
             menu: true,
             label: "Historial de Entrenamientos",
+            shortLabel: "Historial",
             icon: HistoryIcon,
           },
         },

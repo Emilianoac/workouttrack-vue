@@ -26,7 +26,7 @@
   </aside>
 </template>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
   .sidebar {
     @apply bg-white dark:bg-slate-800 h-full relative;
   }
