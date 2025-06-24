@@ -1,7 +1,7 @@
 import { ref, onMounted } from "vue";
 import { supabase } from "@/lib/supabaseClient";
 import type { Routine } from "@/types/routines";
-import { useAuth } from "@/composables/useAuth";
+import { useAuth } from "@/composables/auth/useAuth";
 
 export function useRoutine() {
   const routines = ref<Routine[]>([]);

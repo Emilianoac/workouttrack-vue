@@ -1,4 +1,3 @@
-// composables/useAuth.ts
 import { ref } from "vue";
 import { supabase } from "@/lib/supabaseClient";
 import type { User } from "@supabase/supabase-js";

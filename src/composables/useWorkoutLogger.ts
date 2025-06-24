@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { supabase } from "@/lib/supabaseClient";
-import { useAuth } from "@/composables/useAuth";
+import { useAuth } from "@/composables/auth/useAuth";
 
 import type { RoutineExercise, Routine } from "@/types/routines";
 import type { NewSetLog } from "@/types/workoutLog";

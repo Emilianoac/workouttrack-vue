@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { useAuth } from "@/composables/useAuth";
+  import { useAuth } from "@/composables/auth/useAuth";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
   import Dropdown from "@/components/Shared/Dropdown.vue";
   import ThemeToogle from "@/components/Shared/ThemeToggle.vue";
