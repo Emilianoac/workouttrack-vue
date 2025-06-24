@@ -4,10 +4,23 @@
   import { useLoginForm } from "@/composables/auth/useLoginForm";
 
   const { formData, handleLogin, error, isLoading, isSubmitted, formFieldsErrors } = useLoginForm();
+
+  defineExpose({
+    isSubmitted,
+    formFieldsErrors,
+    formData,
+    error,
+    isLoading,
+    handleLogin,
+  });
 </script>
 
 <template>
-  <form @submit.prevent="handleLogin" class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-6 max-w-md w-full">
+  <form
+    @submit.prevent="handleLogin"
+    class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-6 max-w-md w-full"
+    data-testid="login-form"
+  >
     <SiteBrand class="mb-4 mx-auto w-52" />
     <h2 class="text-xl font-bold mb-4 text-center">Iniciar sesión</h2>
 
@@ -22,8 +35,8 @@
         v-model="formData.email"
       />
       <div v-if="isSubmitted && formFieldsErrors?.email" data-testid="email-errors">
-        <p v-for="error in formFieldsErrors.email.errors" class="text-red-500 text-sm mt-1" :key="error">
-          {{ error }}
+        <p class="text-red-500 text-sm mt-1">
+          {{ formFieldsErrors.email.errors[0] }}
         </p>
       </div>
     </div>
@@ -38,11 +51,11 @@
         data-testid="password-input"
         v-model="formData.password"
       />
-      <template v-if="isSubmitted && formFieldsErrors?.password">
-        <p v-for="error in formFieldsErrors.password.errors" class="text-red-500 text-sm mt-1" :key="error">
-          {{ error }}
+      <div v-if="isSubmitted && formFieldsErrors?.password" data-testid="password-errors">
+        <p class="text-red-500 text-sm mt-1">
+          {{ formFieldsErrors.password.errors[0] }}
         </p>
-      </template>
+      </div>
     </div>
 
     <!-- Submit Button -->

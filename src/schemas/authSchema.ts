@@ -1,15 +1,10 @@
 import { z } from "zod/v4";
 
 const passwordSchema = z
-  .string({
-    error: "Ingresa un correo electrónico válido.",
-  })
-  .min(6, {
-    error: "La contraseña debe tener al menos 6 caracteres.",
-  })
-  .max(20, {
-    error: "La contraseña no puede tener más de 20 caracteres.",
-  });
+  .string()
+  .min(1, { error: "La contraseña es obligatoria." })
+  .min(6, { error: "La contraseña debe tener al menos 6 caracteres." })
+  .max(20, { error: "La contraseña no puede tener más de 20 caracteres." });
 
 const emailSchema = z.email({
   error: "Ingresa un correo electrónico válido.",
