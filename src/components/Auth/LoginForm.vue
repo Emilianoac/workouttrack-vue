@@ -1,9 +1,50 @@
 <script lang="ts" setup>
   import Alert from "@/components/Shared/Alert.vue";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
-  import { useLoginForm } from "@/composables/auth/useLoginForm";
+  import { useRouter } from "vue-router";
+  import { reactive, ref, watch } from "vue";
+  import { useFormValidation } from "@/composables/auth/useFormValidation";
+  import { useAuth } from "@/composables/auth/useAuth";
+  import { loginSchema, type LoginSchema } from "@/schemas/authSchema";
+  import { mapSupabaseError } from "@/errors/mapSupabaseError";
+  import { getAuthErrorMessage } from "@/errors/authMessages";
 
-  const { formData, handleLogin, error, isLoading, isSubmitted, formFieldsErrors } = useLoginForm();
+  const router = useRouter();
+  const { formFieldsErrors, validate } = useFormValidation();
+  const { signInWithEmail, isLoading } = useAuth();
+
+  const formData = reactive<LoginSchema>({ email: "", password: "" });
+  const error = ref<string | null>(null);
+  const isSubmitted = ref(false);
+
+  async function handleLogin() {
+    error.value = null;
+    isSubmitted.value = true;
+
+    const isValid = validate(loginSchema, formData);
+    if (!isValid) return false;
+
+    try {
+      await signInWithEmail(formData.email, formData.password);
+      router.push("/");
+      return true;
+    } catch (err) {
+      const code = mapSupabaseError(err);
+      error.value = getAuthErrorMessage(code);
+      return false;
+    }
+  }
+
+  watch(
+    () => formData,
+    (newValue) => {
+      if (isSubmitted.value) {
+        validate(loginSchema, newValue);
+        error.value = null;
+      }
+    },
+    { deep: true },
+  );
 
   defineExpose({
     isSubmitted,
