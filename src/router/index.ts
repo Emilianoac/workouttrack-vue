@@ -34,7 +34,7 @@ const router = createRouter({
           component: () => import("../views/Dashboard/WorkoutFormView.vue"),
           meta: {
             menu: true,
-            label: "Registrar Entrenamiento",
+            label: "Registrar entrenamiento",
             shortLabel: "Registrar",
             icon: RegisterWorkoutIcon,
           },
@@ -45,7 +45,7 @@ const router = createRouter({
           component: () => import("../views/Dashboard/WorkoutListView.vue"),
           meta: {
             menu: true,
-            label: "Historial de Entrenamientos",
+            label: "Historial de entrenamientos",
             shortLabel: "Historial",
             icon: HistoryIcon,
           },
@@ -64,7 +64,7 @@ const router = createRouter({
           component: () => import("../views/Auth/LoginView.vue"),
           meta: {
             menu: false,
-            label: "Iniciar Sesión",
+            label: "Iniciar sesión",
           },
         },
         {
@@ -82,7 +82,7 @@ const router = createRouter({
           component: () => import("../views/Auth/ForgotPasswordView.vue"),
           meta: {
             menu: false,
-            label: "Olvidé mi Contraseña",
+            label: "Olvidé mi contraseña",
           },
         },
         {
@@ -91,7 +91,7 @@ const router = createRouter({
           component: () => import("../views/Auth/ResetPasswordView.vue"),
           meta: {
             menu: false,
-            label: "Cambiar Contraseña",
+            label: "Cambiar contraseña",
           },
         },
       ],
