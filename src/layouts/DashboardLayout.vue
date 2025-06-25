@@ -8,7 +8,7 @@
   <div class="block lg:grid lg:grid-cols-[230px_1fr] grid-rows-[auto_1fr] md:overflow-hidden h-screen">
     <MainHeader class="col-span-2" />
     <Sidebar class="hidden lg:block" />
-    <main class="p-7 overflow-auto">
+    <main class="p-7 overflow-auto pb-20 lg:pb-7">
       <router-view />
     </main>
   </div>
