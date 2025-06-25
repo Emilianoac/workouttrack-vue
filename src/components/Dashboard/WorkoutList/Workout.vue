@@ -16,7 +16,7 @@
     <!-- Workout log Header -->
     <header class="flex justify-between items-center mb-4">
       <!-- Date -->
-      <span class="font-bold text-sm bg-blue-100 text-blue-600 py-1 px-2 rounded-md">{{
+      <span class="font-bold text-xs bg-blue-100 text-blue-600 py-1 px-2 rounded-md">{{
         formatDate(workoutLog.created_at)
       }}</span>
       <!-- Weight -->
