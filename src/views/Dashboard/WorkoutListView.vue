@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import WorkoutListComponent from "@/components/Dashboard/WorkoutList.vue";
+  import WorkoutListComponent from "@/components/Dashboard/WorkoutList/Index.vue";
 </script>
 
 <template>
