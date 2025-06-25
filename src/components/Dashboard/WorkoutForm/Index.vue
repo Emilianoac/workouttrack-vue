@@ -46,7 +46,7 @@
       </div>
 
       <!-- Select Routine -->
-      <div class="col-span-2">
+      <div class="md:col-span-2">
         <label class="block text-sm font-medium mb-1" for="routine">Seleccionar Rutina</label>
         <select v-model="selectedRoutineId" id="routine" class="input">
           <option value="" disabled>Selecciona una rutina</option>
@@ -81,7 +81,7 @@
     </template>
 
     <!-- Botones -->
-    <div class="flex justify-end gap-2">
+    <div class="flex flex-col md:flex-row justify-end gap-2">
       <button
         v-if="selectedRoutineId"
         @click="addExercise"
