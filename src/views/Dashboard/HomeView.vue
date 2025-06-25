@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed } from "vue";
   import { useDataForCharts } from "@/composables/useDataForCharts";
-  import RoutinesComponent from "@/components/Dashboard/Routines.vue";
+  import RoutinesList from "@/components/Dashboard/Routines/List.vue";
   import AreaChart from "@/components/Charts/AreaChart.vue";
 
   const { weight } = useDataForCharts();
@@ -34,5 +34,5 @@
 
   <!-- Routines Section -->
   <h2 class="text-xl font-bold mb-3">Mis Rutinas</h2>
-  <RoutinesComponent />
+  <RoutinesList />
 </template>

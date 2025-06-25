@@ -8,6 +8,7 @@ import AuthLayout from "@/layouts/AuthLayout.vue";
 import HistoryIcon from "@/components/Icons/History.vue";
 import HomeIcon from "@/components/Icons/Home.vue";
 import RegisterWorkoutIcon from "@/components/Icons/RegisterWorkout.vue";
+import DumbbellIcon from "@/components/Icons/Dumbbell.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,17 @@ const router = createRouter({
             label: "Inicio",
             shortLabel: "Inicio",
             icon: HomeIcon,
+          },
+        },
+        {
+          path: "mis-rutinas",
+          name: "my-routines",
+          component: () => import("../views/Dashboard/RoutinesListView.vue"),
+          meta: {
+            menu: true,
+            label: "Mis Rutinas",
+            shortLabel: "Rutinas",
+            icon: DumbbellIcon,
           },
         },
         {
