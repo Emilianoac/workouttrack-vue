@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import { computed } from "vue";
   import { useRouter } from "vue-router";
 
   defineOptions({
@@ -9,13 +10,18 @@
   const menuItems = router.getRoutes().filter((route) => {
     return route.meta.menu === true;
   });
+
+  const menuItemsColumns = computed(() => {
+    const count = menuItems.length;
+    return `repeat(${count},1fr)`;
+  });
 </script>
 
 <template>
   <nav
     class="bg-white dark:bg-slate-800 fixed bottom-0 left-0 w-full py-2 border-t border-gray-200 dark:border-slate-700 z-50"
   >
-    <ul class="grid grid-cols-3 justify-between items-center">
+    <ul :style="{ gridTemplateColumns: menuItemsColumns }" class="grid justify-between items-center">
       <li v-for="item in menuItems" :key="item.path">
         <router-link
           :to="{ name: item.name }"
