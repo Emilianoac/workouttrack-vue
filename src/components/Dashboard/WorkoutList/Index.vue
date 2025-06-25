@@ -58,9 +58,9 @@
 </script>
 
 <template>
-  <div class="md:flex justify-between items-center mb-5">
-    <h1 class="text-2xl font-bold mb-4">Mis Entrenamientos</h1>
-    <ExportDataButton class="mx-auto mr-0 block text-xs md:text-base" />
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5">
+    <h1 class="text-2xl font-bold mb-4 order-2 mt-5 md:mt-0">Mis Entrenamientos</h1>
+    <ExportDataButton class="mx-auto mr-0 block text-[0.84em] md:text-base order-1" />
   </div>
 
   <!-- Workout Logs -->
