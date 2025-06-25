@@ -31,6 +31,12 @@ export default function useWorkoutLogger() {
     });
   }
 
+  function removeExercise(index: number) {
+    if (exercises.value.length > 1) {
+      exercises.value.splice(index, 1);
+    }
+  }
+
   function addSet(exerciseIndex: number) {
     const exercise = exercises.value[exerciseIndex];
     exercise.sets_logs.push({
@@ -43,6 +49,18 @@ export default function useWorkoutLogger() {
       rest_between_sets_sec: 0,
       notes: null,
     });
+  }
+
+  function removeSet(exerciseIndex: number, setIndex: number) {
+    const exercise = exercises.value[exerciseIndex];
+
+    if (exercise.sets_logs.length > 1) {
+      exercise.sets_logs.splice(setIndex, 1);
+
+      exercise.sets_logs.forEach((set, index) => {
+        set.set_number = index + 1;
+      });
+    }
   }
 
   async function saveData() {
@@ -190,7 +208,9 @@ export default function useWorkoutLogger() {
   return {
     exercises,
     addExercise,
+    removeExercise,
     addSet,
+    removeSet,
     workoutDate,
     bodyWeight,
     selectedRoutineId,

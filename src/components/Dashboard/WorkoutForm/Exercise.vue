@@ -3,6 +3,7 @@
   import type { RoutineExercise, Routine } from "@/types/routines";
   import type { NewSetLog } from "@/types/workoutLog";
   import Set from "@/components/Dashboard/WorkoutForm/Set.vue";
+  import TrashIcon from "@/components/Icons/Trash.vue";
 
   defineOptions({
     name: "ExerciseComponent",
@@ -18,6 +19,8 @@
   const emit = defineEmits<{
     (e: "setExerciseTargetData", routines: Routine[], exerciseIndex: number): void;
     (e: "addSet", exerciseIndex: number): void;
+    (e: "removeSet", exerciseIndex: number, setIndex: number): void;
+    (e: "removeExercise", exerciseIndex: number): void;
   }>();
 
   const props = defineProps<{
@@ -40,12 +43,31 @@
     emit("addSet", exerciseIndex);
   }
 
+  function onRemoveSet(exerciseIndex: number, setIndex: number) {
+    emit("removeSet", exerciseIndex, setIndex);
+  }
+
+  function onRemoveExercise(exerciseIndex: number) {
+    emit("removeExercise", exerciseIndex);
+  }
+
   // Convert props to refs for reactivity
   const exercise = toRef(props, "exercise");
 </script>
 
 <template>
-  <h3 class="font-semibold">Ejercicio {{ exerciseIndex + 1 }}</h3>
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="font-semibold">Ejercicio {{ exerciseIndex + 1 }}</h3>
+    <button
+      v-if="exerciseIndex + 1 > 1"
+      @click="onRemoveExercise(exerciseIndex)"
+      type="button"
+      title="Eliminar ejercicio"
+      class="bg-white border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed w-8 h-8 flex items-center justify-center"
+    >
+      <TrashIcon class="w-4 h-4" />
+    </button>
+  </div>
 
   <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow mb-4">
     <!-- Select Exercise -->
@@ -114,11 +136,20 @@
     </template>
 
     <!-- Add Set Button -->
-    <div class="flex items-center justify-end" v-if="exercise?.exerciseTargetData">
-      <button @click="onAddSet(exerciseIndex)" type="button" class="btn-secondary mt-2 text-sm">+ Añadir set</button>
+    <div class="flex items-center justify-end mt-3 gap-3" v-if="exercise?.exerciseTargetData">
+      <button
+        v-if="exercise?.sets_logs.length > 1"
+        @click="onRemoveSet(exerciseIndex, exercise?.sets_logs.length - 1)"
+        type="button"
+        class="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Eliminar set
+      </button>
+      <button @click="onAddSet(exerciseIndex)" type="button" class="btn-primary text-sm">Añadir set</button>
     </div>
   </div>
 
+  <!-- Set logs errors -->
   <span
     v-if="errors?.properties?.sets_logs && !errors?.properties?.exerciseId"
     class="text-red-500 text-sm block !mt-1"

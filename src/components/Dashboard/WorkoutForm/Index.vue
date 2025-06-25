@@ -14,7 +14,9 @@
     bodyWeight,
     exercises,
     addExercise,
+    removeExercise,
     addSet,
+    removeSet,
     saveData,
     setExerciseTargetData,
     formFieldsErrors,
@@ -73,12 +75,19 @@
         :errors="formFieldsErrors?.exercises?.items?.[i] ?? null"
         @setExerciseTargetData="setExerciseTargetData"
         @addSet="addSet"
+        @removeSet="removeSet"
+        @removeExercise="removeExercise"
       />
     </template>
 
     <!-- Botones -->
     <div class="flex justify-end gap-2">
-      <button v-if="selectedRoutineId" @click="addExercise" type="button" class="btn-secondary">
+      <button
+        v-if="selectedRoutineId"
+        @click="addExercise"
+        type="button"
+        class="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-200"
+      >
         + Añadir ejercicio
       </button>
       <button type="submit" class="btn-primary">Guardar entrenamiento</button>
@@ -100,5 +109,10 @@
   .btn-secondary {
     @apply px-4 py-2 bg-gray-200 text-black rounded-lg hover:bg-gray-300;
     @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-600;
   }
 </style>
