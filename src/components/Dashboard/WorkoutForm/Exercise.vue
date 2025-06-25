@@ -8,6 +8,12 @@
     name: "ExerciseComponent",
   });
 
+  type ZodErrorNode = {
+    errors?: string[];
+    properties?: Record<string, ZodErrorNode>;
+    items?: ZodErrorNode[];
+  };
+
   // Define emits for the component to communicate with parent
   const emit = defineEmits<{
     (e: "setExerciseTargetData", routines: Routine[], exerciseIndex: number): void;
@@ -20,6 +26,8 @@
       exerciseTargetData: RoutineExercise | null;
       sets_logs: NewSetLog[];
     };
+    errors?: ZodErrorNode | null;
+
     routines: Routine[];
     exerciseIndex: number;
   }>();
@@ -58,6 +66,9 @@
           </optgroup>
         </template>
       </select>
+      <span v-if="errors?.properties?.exerciseId" class="text-red-500 text-sm block mt-2">
+        {{ errors?.properties?.exerciseId?.errors?.[0] }}
+      </span>
     </div>
 
     <!-- Exercise target data -->
@@ -107,6 +118,13 @@
       <button @click="onAddSet(exerciseIndex)" type="button" class="btn-secondary mt-2 text-sm">+ Añadir set</button>
     </div>
   </div>
+
+  <span
+    v-if="errors?.properties?.sets_logs && !errors?.properties?.exerciseId"
+    class="text-red-500 text-sm block !mt-1"
+  >
+    {{ errors?.properties?.sets_logs?.errors?.[0] }}
+  </span>
 </template>
 
 <style lang="postcss"></style>

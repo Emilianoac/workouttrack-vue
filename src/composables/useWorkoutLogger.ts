@@ -1,12 +1,15 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/composables/auth/useAuth";
+import { workoutLogSchema } from "@/schemas/workoutRegistrationSchema";
+import { useFormValidation } from "@/composables/useFormValidation";
 
 import type { RoutineExercise, Routine } from "@/types/routines";
 import type { NewSetLog } from "@/types/workoutLog";
 
 export default function useWorkoutLogger() {
   const { user } = useAuth();
+  const { formFieldsErrors, validate } = useFormValidation();
 
   const workoutDate = ref(new Date().toLocaleDateString("sv-SE"));
   const bodyWeight = ref(0);
@@ -43,15 +46,16 @@ export default function useWorkoutLogger() {
   }
 
   async function saveData() {
-    if (!user.value) {
-      alert("Debes iniciar sesión para guardar tu workout log.");
-      return;
-    }
+    if (!user.value) return;
 
-    if (!selectedRoutineId.value) {
-      alert("Selecciona una rutina antes de guardar.");
-      return;
-    }
+    const isValid = validate(workoutLogSchema, {
+      workoutDate: workoutDate.value,
+      bodyWeight: bodyWeight.value,
+      selectedRoutineId: selectedRoutineId.value,
+      exercises: exercises.value,
+    });
+
+    if (!isValid) return;
 
     try {
       // 1. Add workout log
@@ -170,6 +174,19 @@ export default function useWorkoutLogger() {
     }
   }
 
+  watch(
+    () => [exercises.value, workoutDate.value, bodyWeight.value, selectedRoutineId.value],
+    (newValue) => {
+      validate(workoutLogSchema, {
+        workoutDate: workoutDate.value,
+        bodyWeight: bodyWeight.value,
+        selectedRoutineId: selectedRoutineId.value,
+        exercises: newValue,
+      });
+    },
+    { deep: true },
+  );
+
   return {
     exercises,
     addExercise,
@@ -179,5 +196,6 @@ export default function useWorkoutLogger() {
     selectedRoutineId,
     saveData,
     setExerciseTargetData,
+    formFieldsErrors,
   };
 }
