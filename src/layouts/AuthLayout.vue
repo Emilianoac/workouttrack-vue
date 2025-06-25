@@ -16,7 +16,7 @@
         <source :src="workoutVideo" type="video/mp4" />
       </video>
       <div
-        class="absolute top-0 left-0 z-10 backdrop-blur-xl bg-gradient-to-br from-gray-900 to-transparent dark:from-slate-800 dark:to-transparent w-full h-full flex items-center justify-center"
+        class="absolute top-0 left-0 z-10 backdrop-blur-xl bg-gradient-to-br from-gray-900 to-transparent dark:from-slate-800 dark:to-transparent w-full h-full flex items-center justify-center p-4"
       >
         <router-view />
       </div>
