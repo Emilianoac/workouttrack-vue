@@ -111,7 +111,7 @@
     </div>
 
     <!-- Links -->
-    <div class="flex justify-between items-center mt-4 text-xs text-gray-600 dark:text-slate-400">
+    <div class="flex flex-col justify-between items-center mt-4 text-sm text-gray-600 dark:text-slate-400 gap-3">
       <p>
         ¿No tienes una cuenta?
         <router-link :to="{ name: 'register' }" class="text-blue-500 hover:underline">Regístrate</router-link>
