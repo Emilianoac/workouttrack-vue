@@ -3,7 +3,7 @@
   import { registerSchema, type RegisterSchema } from "@/schemas/authSchema";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
   import { getAuthErrorMessage } from "@/errors/authMessages";
-  import { useFormValidation } from "@/composables/auth/useFormValidation";
+  import { useFormValidation } from "@/composables/useFormValidation";
 
   import { useAuth } from "@/composables/auth/useAuth";
   import Alert from "@/components/Shared/Alert.vue";

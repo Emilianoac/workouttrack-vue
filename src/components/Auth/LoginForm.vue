@@ -3,7 +3,7 @@
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
   import { useRouter } from "vue-router";
   import { reactive, ref, watch } from "vue";
-  import { useFormValidation } from "@/composables/auth/useFormValidation";
+  import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/auth/useAuth";
   import { loginSchema, type LoginSchema } from "@/schemas/authSchema";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";

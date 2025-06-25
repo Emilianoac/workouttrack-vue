@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { onMounted, ref, reactive, watch } from "vue";
-  import { useFormValidation } from "@/composables/auth/useFormValidation";
+  import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/auth/useAuth";
   import { useRouter } from "vue-router";
   import { mapSupabaseError } from "@/errors/mapSupabaseError";
