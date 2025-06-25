@@ -38,6 +38,7 @@ export function useRoutine() {
           )
         `,
         )
+        .order("created_at", { ascending: true })
         .eq("user_id", user.value.id);
 
       if (error) throw new Error(error.message);
