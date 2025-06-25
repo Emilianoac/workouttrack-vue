@@ -14,7 +14,7 @@
   <article
     class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-3 w-full hover:opacity-90 transition-opacity duration-300 hover:shadow-lg"
   >
-    <RouterLink :to="`/dashboard/routines/${routine.id}`" class="block">
+    <RouterLink :to="{ name: 'my-routine', params: { id: routine.id } }" class="block">
       <!--Routine Name-->
       <h2 class="font-bold">{{ routine.name }}</h2>
       <!--Routine Description-->
