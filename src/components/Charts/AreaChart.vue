@@ -67,7 +67,7 @@
 </script>
 
 <template>
-  <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md mb-5 border border-gray-200 dark:border-slate-700 p-4">
+  <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md mb-5 p-4">
     <p v-if="error.isError" class="text-red-500 text-center p-8">{{ error.message }}</p>
     <ApexCharts v-else ref="chart" width="100%" height="200" type="area" :series="[series]" :options="chartOptions" />
   </div>
