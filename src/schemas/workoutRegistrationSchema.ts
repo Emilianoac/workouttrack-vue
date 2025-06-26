@@ -19,7 +19,9 @@ const exerciseSchema = z.object({
 
 const workoutLogSchema = z.object({
   workoutDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { error: "Fecha inválida" }),
-  bodyWeight: z.number().min(1, { error: "El peso corporal debe ser mayor a 0." }),
+  bodyWeight: z
+    .number({ error: "Ingresa un numero valido." })
+    .min(1, { error: "El peso corporal debe ser mayor a 0." }),
   selectedRoutineId: z.string().min(1, { error: "Debes seleccionar una rutina." }),
   exercises: z.array(exerciseSchema).min(1, { error: "Debes agregar al menos un ejercicio." }),
 });
