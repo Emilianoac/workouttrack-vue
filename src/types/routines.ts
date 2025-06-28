@@ -8,15 +8,15 @@ export interface Routine {
 export interface RoutineExercise {
   id: string;
   createdAt: Date;
-  routineId: string;
-  exerciseId: string;
+  routine_id: string;
+  exercise_id: string;
   measurement: "reps" | "time";
-  order: number; // Order of the exercise in the routine
+  order: number;
   sets: number;
   reps?: number;
-  duration_sec?: number; // Duration in seconds, if applicable
-  rest_seconds?: number; // Rest time in seconds, if applicable
-  notes?: string; // Additional notes for the exercise
+  duration_sec?: number;
+  rest_seconds?: number;
+  notes?: string;
   exercise: Exercise;
 }
 
@@ -24,5 +24,26 @@ export interface Exercise {
   id: string;
   createdAt: Date;
   name: string;
-  image: string; // URL or path to the exercise image
+  image: string;
 }
+
+export type EditableRoutine = {
+  name: string;
+  description?: string;
+  routines_exercises: EditableRoutineExercise[];
+};
+
+export type EditableRoutineExercise = {
+  id?: string;
+  createdAt?: Date;
+  routine_id?: string;
+  exercise_id: string | null;
+  measurement: "reps" | "time" | null;
+  order: number | null;
+  sets: number | null;
+  reps: number | null;
+  duration_sec: number | null;
+  rest_seconds: number | null;
+  notes: string | null;
+  exercise?: Exercise;
+};
