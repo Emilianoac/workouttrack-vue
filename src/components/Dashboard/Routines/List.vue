@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { useRoutine } from "@/composables/useRoutine";
+  import { useRoutine } from "@/composables/routines/useRoutine";
   import RoutinesCard from "@/components/Dashboard/Routines/Card.vue";
 
   defineOptions({
