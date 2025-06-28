@@ -1,25 +1,60 @@
 <script lang="ts" setup>
   import { onMounted } from "vue";
-  import { useRoute } from "vue-router";
-  import { useRoutine } from "@/composables/useRoutine";
+  import { useRoute, useRouter } from "vue-router";
+  import { useRoutine } from "@/composables/routines/useRoutine";
+  import EditIcon from "@/components/Icons/Edit.vue";
+  import TrashIcon from "@/components/Icons/Trash.vue";
 
-  const { routine, fetchRoutineById, loading } = useRoutine();
+  const { routine, getRoutineById, loading, deleteRoutine } = useRoutine();
   const route = useRoute();
+  const router = useRouter();
+
+  async function handleDelete() {
+    if (routine.value) {
+      const confirmed = confirm("¿Estás seguro de que quieres eliminar esta rutina?");
+      if (confirmed) {
+        await deleteRoutine(routine.value.id);
+        router.push({ name: "my-routines" });
+      }
+    }
+  }
 
   onMounted(async () => {
     const id = route.params.id;
     if (id && typeof id === "string") {
-      await fetchRoutineById(id);
+      await getRoutineById(id);
     }
   });
 </script>
 
 <template>
   <div v-if="routine && !loading">
-    <h1 class="text-xl md:text-2xl font-bold mb-2">Rutina: {{ routine.name }}</h1>
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-xl md:text-2xl font-bold">Rutina: {{ routine.name }}</h1>
+      <!-- Routine Actions -->
+      <div class="flex items-center gap-2">
+        <RouterLink
+          :to="{ name: 'edit-routine', params: { id: routine.id } }"
+          title="Editar rutina"
+          class="app-btn font-semibold p-2 text-sm bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-200 dark:hover:bg-slate-50 dark:text-blue-600 mx-auto mr-0 flex items-center"
+        >
+          <EditIcon class="w-5 h-5" />
+        </RouterLink>
+        <button
+          @click="handleDelete"
+          title="Eliminar rutina"
+          class="app-btn font-semibold p-2 text-sm bg-red-600 text-white hover:bg-red-500 mx-auto mr-0 flex items-center"
+        >
+          <TrashIcon class="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Routine Details -->
     <p class="mb-4">{{ routine.description }}</p>
 
-    <ul class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Routine Exercises -->
+    <ul class="grid gap-4 grid-cols-1">
       <li
         v-for="exercise in routine.routines_exercises"
         :key="exercise.id"
@@ -32,7 +67,7 @@
               v-if="exercise.exercise.image"
               :src="exercise.exercise.image"
               alt="Exercise Image"
-              class="w-28 h-28 rounded-md mb-2 border border-slate-200 dark:border-slate-700"
+              class="w-28 h-28 rounded-md mb-2 border border-slate-100 dark:border-slate-700"
             />
           </div>
           <ul class="text-sm space-y-2">
