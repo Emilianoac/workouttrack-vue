@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { type Routine } from "@/types/routines";
+  import { type Routine } from "@/types/routine";
 
   defineOptions({
     name: "RoutinesCard",

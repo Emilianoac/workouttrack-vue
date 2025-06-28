@@ -1,4 +1,4 @@
-import type { EditableRoutine, EditableRoutineExercise, Routine } from "@/types/routines";
+import type { EditableRoutine, EditableRoutineExercise, Routine } from "@/types/routine";
 
 export function routineToEditable(data: Routine): EditableRoutine {
   console.log("Convirtiendo rutina de Supabase a editable:", data);

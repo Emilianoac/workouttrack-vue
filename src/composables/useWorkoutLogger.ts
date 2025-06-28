@@ -4,7 +4,7 @@ import { useAuth } from "@/composables/auth/useAuth";
 import { workoutLogSchema } from "@/schemas/workoutRegistrationSchema";
 import { useFormValidation } from "@/composables/useFormValidation";
 
-import type { RoutineExercise, Routine } from "@/types/routines";
+import type { RoutineExercise, Routine } from "@/types/routine";
 import type { NewSetLog } from "@/types/workoutLog";
 
 export default function useWorkoutLogger() {

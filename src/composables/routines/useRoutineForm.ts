@@ -2,7 +2,7 @@ import { ref, reactive } from "vue";
 import { useAuth } from "@/composables/auth/useAuth";
 import { fetchRoutineById, createRoutine, updateRoutine } from "@/services/routine/routineService";
 import { routineToEditable } from "@/services/routine/routineMappers";
-import type { EditableRoutine, EditableRoutineExercise } from "@/types/routines";
+import type { EditableRoutine, EditableRoutineExercise } from "@/types/routine";
 
 function createEmptyExercise(): EditableRoutineExercise {
   return {

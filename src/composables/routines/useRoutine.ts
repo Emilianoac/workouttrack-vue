@@ -1,7 +1,7 @@
 import { ref, onMounted } from "vue";
 import { useAuth } from "@/composables/auth/useAuth";
 import { fetchRoutineById, fetchRoutines, deleteRoutineAPI } from "@/services/routine/routineService";
-import type { Routine } from "@/types/routines";
+import type { Routine } from "@/types/routine";
 
 export function useRoutine({ autoFetch = true } = {}) {
   const { user } = useAuth();

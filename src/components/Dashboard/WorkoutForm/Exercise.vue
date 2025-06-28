@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { toRef } from "vue";
-  import type { RoutineExercise, Routine } from "@/types/routines";
+  import type { RoutineExercise, Routine } from "@/types/routine";
   import type { NewSetLog } from "@/types/workoutLog";
   import Set from "@/components/Dashboard/WorkoutForm/Set.vue";
   import TrashIcon from "@/components/Icons/Trash.vue";

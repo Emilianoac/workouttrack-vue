@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import type { EditableRoutine, Routine } from "@/types/routines";
+import type { EditableRoutine, Routine } from "@/types/routine";
 
 export async function fetchRoutines(userId: string): Promise<Routine[]> {
   const { data, error } = await supabase
