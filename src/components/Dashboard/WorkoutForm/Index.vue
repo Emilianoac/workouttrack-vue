@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useRoutine } from "@/composables/useRoutine";
+  import { useRoutine } from "@/composables/routines/useRoutine";
   import useWorkoutLogger from "@/composables/useWorkoutLogger";
   import Exercise from "./Exercise.vue";
 
