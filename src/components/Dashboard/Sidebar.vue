@@ -6,9 +6,14 @@
   });
 
   const router = useRouter();
-  const menuItems = router.getRoutes().filter((route) => {
-    return route.meta.menu === true;
-  });
+  const menuItems = router
+    .getRoutes()
+    .filter((route) => {
+      return route.meta.menu === true;
+    })
+    .sort((a, b) => {
+      return (Number(a.meta.order) || 0) - (Number(b.meta.order) || 0);
+    });
 </script>
 
 <template>
