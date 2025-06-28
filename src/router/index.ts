@@ -7,7 +7,14 @@ import dashboardRoutes from "./routes/dashboard";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [...dashboardRoutes, ...authRoutes],
+  routes: [
+    {
+      path: "/",
+      redirect: "/dashboard",
+    },
+    ...dashboardRoutes,
+    ...authRoutes,
+  ],
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -23,7 +30,9 @@ router.beforeEach(async (to, from, next) => {
   if (requiresAuth && !session) {
     next("/auth/login");
   } else if (to.name === "login" && session) {
-    next("/");
+    next("/dashboard");
+  } else if (to.name === "register" && session) {
+    next("/dashboard");
   } else {
     next();
   }

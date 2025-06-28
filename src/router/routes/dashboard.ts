@@ -1,14 +1,15 @@
-import { type RouteRecordRaw } from "vue-router";
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import { type RouteRecordRaw } from "vue-router";
+
+import routinesRoutes from "@/router/routes/routines";
 
 import HistoryIcon from "@/components/Icons/History.vue";
 import HomeIcon from "@/components/Icons/Home.vue";
 import RegisterWorkoutIcon from "@/components/Icons/RegisterWorkout.vue";
-import DumbbellIcon from "@/components/Icons/Dumbbell.vue";
 
 export default [
   {
-    path: "/",
+    path: "/dashboard",
     component: DashboardLayout,
     meta: { requiresAuth: true },
     children: [
@@ -18,40 +19,20 @@ export default [
         component: () => import("../../views/Dashboard/HomeView.vue"),
         meta: {
           menu: true,
+          order: 1,
           label: "Inicio",
           shortLabel: "Inicio",
           icon: HomeIcon,
         },
       },
-      {
-        path: "mis-rutinas",
-        name: "my-routines",
-        meta: {
-          menu: true,
-          label: "Mis Rutinas",
-          shortLabel: "Rutinas",
-          icon: DumbbellIcon,
-        },
-        component: () => import("../../views/Dashboard/Routines/RoutinesListView.vue"),
-      },
-
-      {
-        path: "mis-rutinas/:id",
-        name: "my-routine",
-        component: () => import("../../views/Dashboard/Routines/RoutineView.vue"),
-        meta: {
-          menu: false,
-          label: "Rutina",
-          shortLabel: "Rutina",
-          icon: DumbbellIcon,
-        },
-      },
+      ...routinesRoutes,
       {
         path: "registar-entrenamiento",
         name: "register-workout",
         component: () => import("../../views/Dashboard/WorkoutFormView.vue"),
         meta: {
           menu: true,
+          order: 3,
           label: "Registrar entrenamiento",
           shortLabel: "Registrar",
           icon: RegisterWorkoutIcon,
@@ -63,6 +44,7 @@ export default [
         component: () => import("../../views/Dashboard/WorkoutListView.vue"),
         meta: {
           menu: true,
+          order: 4,
           label: "Historial de entrenamientos",
           shortLabel: "Historial",
           icon: HistoryIcon,
