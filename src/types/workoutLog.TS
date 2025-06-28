@@ -45,4 +45,4 @@ export interface SetLog {
   notes: string | null;
 }
 
-export interface NewSetLog extends Omit<SetLog, "id"> {}
+export type NewSetLog = Omit<SetLog, "id">;
