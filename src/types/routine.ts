@@ -1,3 +1,5 @@
+import type { Exercise } from "@/types/exercise";
+
 export interface Routine {
   id: string;
   name: string;
@@ -18,13 +20,6 @@ export interface RoutineExercise {
   rest_seconds?: number;
   notes?: string;
   exercise: Exercise;
-}
-
-export interface Exercise {
-  id: string;
-  createdAt: Date;
-  name: string;
-  image: string;
 }
 
 export type EditableRoutine = {

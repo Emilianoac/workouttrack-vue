@@ -1,3 +1,5 @@
+import type { Exercise } from "@/types/exercise";
+
 export interface WorkoutLog {
   id: string;
   created_at: string;
@@ -25,12 +27,6 @@ export interface WorkoutLogEntry {
 export interface Routine {
   id: string;
   name: string;
-}
-
-export interface Exercise {
-  id: string;
-  name: string;
-  image: string;
 }
 
 export interface SetLog {
