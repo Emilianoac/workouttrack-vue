@@ -36,7 +36,7 @@
         <RouterLink
           :to="{ name: 'edit-routine', params: { id: routine.id } }"
           title="Editar rutina"
-          class="app-btn font-semibold p-2 text-sm bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-200 dark:hover:bg-slate-50 dark:text-blue-600 mx-auto mr-0 flex items-center"
+          class="app-btn app-btn-primary flex items-center gap-2 p-2 font-semibold text-sm"
         >
           <EditIcon class="w-5 h-5" />
         </RouterLink>

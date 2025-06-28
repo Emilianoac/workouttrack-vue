@@ -3,6 +3,7 @@
   import { useDataForCharts } from "@/composables/useDataForCharts";
   import RoutinesList from "@/components/Dashboard/Routines/List.vue";
   import AreaChart from "@/components/Charts/AreaChart.vue";
+  import RegisterWorkoutIcon from "@/components/Icons/RegisterWorkout.vue";
 
   const { weight } = useDataForCharts();
 
@@ -13,8 +14,14 @@
 
 <template>
   <!-- Welcome Section -->
-  <section class="mb-6">
-    <h1 class="text-3xl font-bold mb-4">Bienvenido</h1>
+  <section class="flex justify-between items-center mb-4">
+    <h1 class="text-3xl font-bold">Bienvenido</h1>
+    <RouterLink
+      :to="{ name: 'register-workout' }"
+      class="app-btn app-btn-primary font-semibold text-sm hidden md:flex items-center gap-2"
+    >
+      Registar entrenamiento <RegisterWorkoutIcon />
+    </RouterLink>
   </section>
 
   <!-- Body Weight Chart -->

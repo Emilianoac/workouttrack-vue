@@ -8,9 +8,10 @@
       <h1 class="text-2xl font-bold mb-4">Mis Rutinas</h1>
       <RouterLink
         :to="{ name: 'create-routine' }"
-        class="app-btn font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-200 dark:hover:bg-slate-50 dark:text-blue-600 mb-4"
-        >Añadir rutina</RouterLink
+        class="app-btn app-btn-primary font-semibold text-sm flex items-center gap-2"
       >
+        Añadir rutina
+      </RouterLink>
     </div>
     <RoutinesList />
   </section>
