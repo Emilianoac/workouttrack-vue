@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-  import { ref, onMounted } from "vue";
-  import { supabase } from "@/lib/supabaseClient";
-  import type { WorkoutLog } from "@/types/workoutLog";
+  import { useWorkout } from "@/composables/workouts/useWorkout";
   import WorkoutLogComponent from "@/components/Dashboard/WorkoutList/Workout.vue";
   import ExportDataButton from "@/components/Dashboard/ExportDataButton.vue";
   import SkeletonList from "@/components/Skeletons/List.vue";
@@ -10,51 +8,7 @@
     name: "WorkoutListComponent",
   });
 
-  const workoutsLogs = ref<WorkoutLog[] | []>([]);
-
-  async function getWorkouts() {
-    const { data } = await supabase
-      .from("workout_logs")
-      .select(
-        `
-        id,
-        created_at,
-        body_weight_kg,
-        notes,
-        routine:routine_id (
-          id,
-          name
-        ),
-        workout_log_entries (
-          id,
-          target_sets,
-          target_reps,
-          target_duration_sec,
-          target_rest_between_sets_sec,
-          exercise:exercise_id (
-            id,
-            name
-          ),
-          set_logs (
-            id,
-            set_number,
-            reps,
-            weight_kg,
-            is_body_weight,
-            rest_between_sets_sec,
-            notes
-          )
-        )
-      `,
-      )
-      .order("created_at", { ascending: false });
-
-    workoutsLogs.value = data as unknown as WorkoutLog[];
-  }
-
-  onMounted(() => {
-    getWorkouts();
-  });
+  const { workouts: workoutsLogs } = useWorkout();
 </script>
 
 <template>
