@@ -1,45 +1,56 @@
-# workoutTracker
+# WorkoutTracker 🏋️‍♂️
 
-This template should help get you started developing with Vue 3 in Vite.
+**Aplicación web para registrar, visualizar y analizar rutinas y entrenamientos personales.**
 
-## Recommended IDE Setup
+![home](https://awfmkrbibirkurfagtvv.supabase.co/storage/v1/object/public/workouttracker/app-images/app-01.png)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 🚀 Características principales
 
-## Type Support for `.vue` Imports in TS
+- 🧠 **Gestión de rutinas**  
+  Visualiza y administra tus rutinas de ejercicios con sets y repeticiones personalizadas.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+  ![perfil-rutina](https://awfmkrbibirkurfagtvv.supabase.co/storage/v1/object/public/workouttracker/app-images/app-05.png)
 
-## Customize configuration
+  ![perfil-rutina](https://awfmkrbibirkurfagtvv.supabase.co/storage/v1/object/public/workouttracker/app-images/app-02.png)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- 📅 **Registro de entrenamientos**  
+  Añade sesiones con fecha, rutina, peso corporal y ejercicios realizados.
 
-## Project Setup
+  ![perfil-rutina](https://awfmkrbibirkurfagtvv.supabase.co/storage/v1/object/public/workouttracker/app-images/app-04.png)
 
-```sh
-npm install
-```
+- 📜 **Historial de entrenamientos**  
+  Consulta el historial de entrenamientos con todos los datos registrados y opción de exportar.
 
-### Compile and Hot-Reload for Development
+  ![historial entrenamientos](https://awfmkrbibirkurfagtvv.supabase.co/storage/v1/object/public/workouttracker/app-images/app-03.png)
 
-```sh
-npm run dev
-```
+## 🛠 Tecnologías usadas
 
-### Type-Check, Compile and Minify for Production
+### 👨‍💻 Core del frontend
 
-```sh
-npm run build
-```
+- Vue 3
+- Vue Router
+- Vite
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### 🎨 Estilos y UI
 
-```sh
-npm run test:unit
-```
+- TailwindCSS
+- Vue ApexCharts
 
-### Lint with [ESLint](https://eslint.org/)
+### 📡 Backend as a Service
 
-```sh
-npm run lint
-```
+- Supabase
+
+### ✅ Validación de formularios y datos
+
+- Zod
+
+### 🧪 Testing
+
+- Vitest
+- Vue Test Utils
+
+### ⚙️ CI/CD
+
+- GitHub Actions
+
+---
