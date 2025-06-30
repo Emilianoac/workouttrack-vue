@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { computed } from "vue";
-  import { useDataForCharts } from "@/composables/useDataForCharts";
+  import { useWorkoutChartData } from "@/composables/workouts/useWorkoutChartData";
   import RoutinesList from "@/components/Dashboard/Routines/List.vue";
   import AreaChart from "@/components/Charts/AreaChart.vue";
   import RegisterWorkoutIcon from "@/components/Icons/RegisterWorkout.vue";
 
-  const { weight } = useDataForCharts();
+  const { weight } = useWorkoutChartData();
 
   const currentWeight = computed(() => {
     return weight.data.length > 0 ? weight.data[weight.data.length - 1][1] : "N/A";

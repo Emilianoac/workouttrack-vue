@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabaseClient";
 import { reactive, onMounted } from "vue";
 
-export function useDataForCharts() {
+export function useWorkoutChartData() {
   const weight = reactive({
     data: [] as number[][],
     lastWeight: 0,
