@@ -7,7 +7,7 @@ import { useFormValidation } from "@/composables/useFormValidation";
 import type { RoutineExercise, Routine } from "@/types/routine";
 import type { NewSetLog } from "@/types/workoutLog";
 
-export default function useWorkoutLogger() {
+export default function useWorkoutForm() {
   const { user } = useAuth();
   const { formFieldsErrors, validate } = useFormValidation();
 

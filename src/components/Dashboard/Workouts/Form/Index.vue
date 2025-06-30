@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useRoutine } from "@/composables/routines/useRoutine";
-  import useWorkoutLogger from "@/composables/workouts/useWorkoutLogger";
+  import useWorkoutForm from "@/composables/workouts/useWorkoutForm";
   import Exercise from "./Exercise.vue";
 
   defineOptions({
@@ -20,7 +20,7 @@
     saveData,
     setExerciseTargetData,
     formFieldsErrors,
-  } = useWorkoutLogger();
+  } = useWorkoutForm();
 </script>
 
 <template>
