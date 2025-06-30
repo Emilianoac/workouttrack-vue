@@ -33,7 +33,7 @@
     type="button"
     class="app-btn app-btn-primary font-semibold text-sm flex items-center gap-2"
   >
-    Exportar datos <DownloadIcon class="w-5 h-5" />
+    Descargar datos <DownloadIcon class="w-5 h-5" />
   </button>
 </template>
 

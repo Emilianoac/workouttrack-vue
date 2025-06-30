@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { useWorkout } from "@/composables/workouts/useWorkout";
   import WorkoutLogComponent from "@/components/Dashboard/WorkoutList/Workout.vue";
-  import ExportDataButton from "@/components/Dashboard/ExportDataButton.vue";
+  import DownLoadWorkoutsButton from "@/components/Dashboard/Workouts/DownLoadWorkouts.vue";
   import SkeletonList from "@/components/Skeletons/List.vue";
 
   defineOptions({
@@ -14,7 +14,7 @@
 <template>
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
     <h1 class="text-2xl font-bold mb-4 mt-5 md:mt-0 md:mb-0">Mis Entrenamientos</h1>
-    <ExportDataButton class="mx-auto ml-0 md:mr-0 block" />
+    <DownLoadWorkoutsButton class="mx-auto ml-0 md:mr-0 block" />
   </div>
 
   <!-- Workout Logs -->
