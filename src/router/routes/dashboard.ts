@@ -2,10 +2,9 @@ import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import { type RouteRecordRaw } from "vue-router";
 
 import routinesRoutes from "@/router/routes/routines";
+import workoutsRoutes from "@/router/routes/workouts";
 
-import HistoryIcon from "@/components/Icons/History.vue";
 import HomeIcon from "@/components/Icons/Home.vue";
-import RegisterWorkoutIcon from "@/components/Icons/RegisterWorkout.vue";
 
 export default [
   {
@@ -26,30 +25,7 @@ export default [
         },
       },
       ...routinesRoutes,
-      {
-        path: "registar-entrenamiento",
-        name: "register-workout",
-        component: () => import("../../views/Dashboard/Workouts/RegisterWorkoutView.vue"),
-        meta: {
-          menu: true,
-          order: 3,
-          label: "Registrar entrenamiento",
-          shortLabel: "Registrar",
-          icon: RegisterWorkoutIcon,
-        },
-      },
-      {
-        path: "historial-entrenamientos",
-        name: "workout-history",
-        component: () => import("../../views/Dashboard/Workouts/WorkoutsHistoryView.vue"),
-        meta: {
-          menu: true,
-          order: 4,
-          label: "Historial de entrenamientos",
-          shortLabel: "Historial",
-          icon: HistoryIcon,
-        },
-      },
+      ...workoutsRoutes,
     ],
   },
 ] as RouteRecordRaw[];
