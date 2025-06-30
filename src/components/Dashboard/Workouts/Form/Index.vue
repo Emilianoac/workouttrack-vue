@@ -17,7 +17,7 @@
     removeExercise,
     addSet,
     removeSet,
-    saveData,
+    saveWorkout,
     setExerciseTargetData,
     formFieldsErrors,
   } = useWorkoutForm();
@@ -25,7 +25,7 @@
 
 <template>
   <h1 class="text-2xl font-bold mb-5">Registrar entrenamiento</h1>
-  <form @submit.prevent="saveData()" class="space-y-4">
+  <form @submit.prevent="saveWorkout()" class="space-y-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full p-4 bg-white dark:bg-slate-800 rounded-lg shadow">
       <!-- Date -->
       <div>
