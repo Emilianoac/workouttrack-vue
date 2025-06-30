@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useWorkout } from "@/composables/workouts/useWorkout";
-  import WorkoutLogComponent from "@/components/Dashboard/WorkoutList/Workout.vue";
+  import WorkoutLogComponent from "@/components/Dashboard/Workouts/List/Workout.vue";
   import DownLoadWorkoutsButton from "@/components/Dashboard/Workouts/DownLoadWorkouts.vue";
   import SkeletonList from "@/components/Skeletons/List.vue";
 

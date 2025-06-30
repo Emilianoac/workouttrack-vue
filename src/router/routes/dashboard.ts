@@ -29,7 +29,7 @@ export default [
       {
         path: "registar-entrenamiento",
         name: "register-workout",
-        component: () => import("../../views/Dashboard/WorkoutFormView.vue"),
+        component: () => import("../../views/Dashboard/Workouts/RegisterWorkoutView.vue"),
         meta: {
           menu: true,
           order: 3,
@@ -41,7 +41,7 @@ export default [
       {
         path: "historial-entrenamientos",
         name: "workout-history",
-        component: () => import("../../views/Dashboard/WorkoutListView.vue"),
+        component: () => import("../../views/Dashboard/Workouts/WorkoutsHistoryView.vue"),
         meta: {
           menu: true,
           order: 4,

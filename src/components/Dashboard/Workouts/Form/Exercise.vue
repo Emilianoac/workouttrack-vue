@@ -2,7 +2,7 @@
   import { toRef } from "vue";
   import type { RoutineExercise, Routine } from "@/types/routine";
   import type { NewSetLog } from "@/types/workoutLog";
-  import Set from "@/components/Dashboard/WorkoutForm/Set.vue";
+  import Set from "@/components/Dashboard/Workouts/Form/Set.vue";
   import TrashIcon from "@/components/Icons/Trash.vue";
 
   defineOptions({
