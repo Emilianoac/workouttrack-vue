@@ -42,3 +42,13 @@ export interface SetLog {
 }
 
 export type NewSetLog = Omit<SetLog, "id">;
+
+export type WorkoutLogdownloadable = Omit<WorkoutLog, "routine" | "workout_log_entries"> & {
+  routine: Pick<Routine, "name">;
+  workout_log_entries: Array<
+    Omit<WorkoutLogEntry, "exercise" | "set_logs"> & {
+      exercise: Pick<Exercise, "name">;
+      set_logs: Array<Omit<SetLog, "id">>;
+    }
+  >;
+};
