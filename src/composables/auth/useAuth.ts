@@ -1,30 +1,33 @@
 import { ref } from "vue";
-import { supabase } from "@/lib/supabaseClient";
+import {
+  getSessionService,
+  onAuthStateChangeService,
+  signInWithEmailService,
+  signUpWithEmailService,
+  signOutService,
+  exchangeCodeForSessionService,
+  sendResetPasswordEmailService,
+  updatePasswordService,
+} from "@/services/auth/authService";
 import type { User } from "@supabase/supabase-js";
 
 const user = ref<User | null>(null);
 const isLoading = ref(false);
 
 async function loadSession() {
-  const { data } = await supabase.auth.getSession();
-  user.value = data.session?.user ?? null;
+  user.value = await getSessionService();
 }
-
 loadSession();
-supabase.auth.onAuthStateChange((event, session) => {
-  if (session) {
-    user.value = session.user;
-  } else {
-    user.value = null;
-  }
+
+onAuthStateChangeService((sessionUser) => {
+  user.value = sessionUser;
 });
 
 export function useAuth() {
   async function signInWithEmail(email: string, password: string) {
     isLoading.value = true;
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      const data = await signInWithEmailService(email, password);
       user.value = data.user;
       return data;
     } finally {
@@ -35,8 +38,7 @@ export function useAuth() {
   async function signUpWithEmail(email: string, password: string) {
     isLoading.value = true;
     try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
+      const data = await signUpWithEmailService(email, password);
       return data;
     } finally {
       isLoading.value = false;
@@ -46,8 +48,7 @@ export function useAuth() {
   async function signOut() {
     isLoading.value = true;
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      await signOutService();
       user.value = null;
     } finally {
       isLoading.value = false;
@@ -55,17 +56,13 @@ export function useAuth() {
   }
 
   async function exchangeCodeForSession(url: string) {
-    const { error } = await supabase.auth.exchangeCodeForSession(url);
-    if (error) throw error;
+    await exchangeCodeForSessionService(url);
   }
 
   async function sendResetPasswordEmail(email: string) {
     isLoading.value = true;
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/cambiar-contrasena`,
-      });
-      if (error) throw error;
+      await sendResetPasswordEmailService(email);
       return { success: true, message: "Password reset email sent." };
     } finally {
       isLoading.value = false;
@@ -75,15 +72,14 @@ export function useAuth() {
   async function updatePassword(newPassword: string) {
     isLoading.value = true;
     try {
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-      if (error) throw error;
+      await updatePasswordService(newPassword);
     } finally {
       isLoading.value = false;
     }
   }
 
   function getSession() {
-    return supabase.auth.getSession();
+    return getSessionService();
   }
 
   return {
