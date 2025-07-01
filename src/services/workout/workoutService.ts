@@ -116,7 +116,7 @@ export async function createWorkoutLogMetadata({
 }
 
 export async function createWorkoutLogEntry(payload: WorkoutLogEntryPayload[]) {
-  const { data, error } = await supabase.from("workout_log_entries").insert(payload).select().single();
+  const { data, error } = await supabase.from("workout_log_entries").insert(payload).select();
 
   if (error) throw new Error(error.message);
   return data as unknown as WorkoutLogEntry[];
