@@ -6,8 +6,6 @@
   import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/auth/useAuth";
   import { loginSchema, type LoginSchema } from "@/schemas/authSchema";
-  import { mapSupabaseError } from "@/errors/mapSupabaseError";
-  import { getAuthErrorMessage } from "@/errors/authMessages";
 
   const router = useRouter();
   const { formFieldsErrors, validate } = useFormValidation();
@@ -29,8 +27,11 @@
       router.push("/");
       return true;
     } catch (err) {
-      const code = mapSupabaseError(err);
-      error.value = getAuthErrorMessage(code);
+      if (err instanceof Error) {
+        error.value = err.message;
+      } else {
+        error.value = "Error desconocido al iniciar sesión.";
+      }
       return false;
     }
   }

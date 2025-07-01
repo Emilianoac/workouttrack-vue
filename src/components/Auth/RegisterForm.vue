@@ -1,8 +1,6 @@
 <script lang="ts" setup>
   import { ref, reactive, watch } from "vue";
   import { registerSchema, type RegisterSchema } from "@/schemas/authSchema";
-  import { mapSupabaseError } from "@/errors/mapSupabaseError";
-  import { getAuthErrorMessage } from "@/errors/authMessages";
   import { useFormValidation } from "@/composables/useFormValidation";
 
   import { useAuth } from "@/composables/auth/useAuth";
@@ -24,8 +22,11 @@
     try {
       await signUpWithEmail(formData.email, formData.password);
     } catch (err) {
-      const code = mapSupabaseError(err);
-      error.value = getAuthErrorMessage(code);
+      if (err instanceof Error) {
+        error.value = err.message;
+      } else {
+        error.value = "Error desconocido al registrarse.";
+      }
     }
   }
 

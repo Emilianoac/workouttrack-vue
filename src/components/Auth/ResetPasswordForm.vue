@@ -3,8 +3,6 @@
   import { useFormValidation } from "@/composables/useFormValidation";
   import { useAuth } from "@/composables/auth/useAuth";
   import { useRouter } from "vue-router";
-  import { mapSupabaseError } from "@/errors/mapSupabaseError";
-  import { getAuthErrorMessage } from "@/errors/authMessages";
   import { resetPasswordSchema } from "@/schemas/authSchema";
   import Alert from "@/components/Shared/Alert.vue";
   import SiteBrand from "@/components/Shared/SiteBrand.vue";
@@ -31,8 +29,11 @@
 
       router.push("/");
     } catch (err) {
-      const code = mapSupabaseError(err);
-      error.value = getAuthErrorMessage(code);
+      if (err instanceof Error) {
+        error.value = err.message;
+      } else {
+        error.value = "Error desconocido al cambiar la contraseña.";
+      }
     }
   }
 
