@@ -1,6 +1,6 @@
 import type { AuthErrorCode } from "./authCodes";
 
-export function mapSupabaseError(err: unknown): AuthErrorCode {
+export function mapAuthError(err: unknown): AuthErrorCode {
   if (typeof err === "object" && err !== null && "code" in err) {
     const code = (err as { code: string }).code;
 
