@@ -54,8 +54,7 @@ export default function useWorkoutForm() {
       const setLogsPayload = buildSetLogsPayload(entryData, exercises.value);
 
       if (setLogsPayload.length > 0) {
-        console.log("Set logs to insert:", setLogsPayload);
-        createWorkoutSetLogs(setLogsPayload);
+        await createWorkoutSetLogs(setLogsPayload);
       }
 
       exercises.value = [{ exerciseId: "", exerciseTargetData: null, sets_logs: [] }];
