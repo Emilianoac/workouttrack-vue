@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { onMounted } from "vue";
   import { useRoutineForm } from "@/composables/routines/useRoutineForm";
-  import { useExercise } from "@/composables/useExercise";
+  import { useExercise } from "@/composables/exercises/useExercise";
   import TrashIcon from "@/components/Icons/Trash.vue";
 
   const props = defineProps<{
