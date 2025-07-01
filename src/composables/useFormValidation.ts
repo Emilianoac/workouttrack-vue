@@ -7,25 +7,31 @@ type ZodErrorNode = {
   items?: ZodErrorNode[];
 };
 
+type FieldErrors = Record<string, { errors: string[]; items?: ZodErrorNode[] }> | undefined;
+
+function parseData<T extends z.ZodTypeAny>(schema: T, data: unknown) {
+  return schema.safeParse(data);
+}
+
+function extractFieldErrors(error: z.ZodError): FieldErrors {
+  const tree = z.treeifyError(error);
+  if ("properties" in tree && tree.properties) {
+    return tree.properties as unknown as FieldErrors;
+  }
+  return undefined;
+}
+
 export function useFormValidation<T extends z.ZodTypeAny>() {
-  const formFieldsErrors = ref<Record<string, { errors: string[]; items?: ZodErrorNode[] }> | undefined>(undefined);
+  const formFieldsErrors = ref<FieldErrors>(undefined);
 
   function validate(schema: T, data: unknown): data is z.infer<T> {
-    const result = schema.safeParse(data);
-    if (!result.success) {
-      const tree = z.treeifyError(result.error);
-      if ("properties" in tree && tree.properties) {
-        formFieldsErrors.value = tree.properties as unknown as Record<
-          string,
-          { errors: string[]; items?: ZodErrorNode[] }
-        >;
-      } else {
-        formFieldsErrors.value = undefined;
-      }
-      return false;
-    } else {
+    const result = parseData(schema, data);
+    if (result.success) {
       formFieldsErrors.value = undefined;
       return true;
+    } else {
+      formFieldsErrors.value = extractFieldErrors(result.error);
+      return false;
     }
   }
 
