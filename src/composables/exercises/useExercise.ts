@@ -1,8 +1,8 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { fetchExercises } from "@/services/exercise/exerciseService";
 import type { Exercise } from "@/types/exercise";
 
-export function useExercise({ autoFetch = true } = {}) {
+export function useExercise() {
   const exercises = ref<Exercise[]>([]);
   const error = ref(false);
   const loading = ref(false);
@@ -21,12 +21,6 @@ export function useExercise({ autoFetch = true } = {}) {
       loading.value = false;
     }
   }
-
-  onMounted(() => {
-    if (autoFetch) {
-      getExercices();
-    }
-  });
 
   return {
     exercises,

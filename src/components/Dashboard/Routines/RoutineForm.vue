@@ -8,13 +8,17 @@
     routineId?: string;
   }>();
 
-  const { exercises } = useExercise();
+  const { exercises, getExercices } = useExercise();
   const { routine, isEditMode, loadRoutine, saveRoutine, addExercise, removeExercise } = useRoutineForm();
 
-  if (props.routineId) {
-    isEditMode.value = true;
-    onMounted(() => loadRoutine(props.routineId!));
-  }
+  onMounted(async () => {
+    await getExercices();
+
+    if (props.routineId) {
+      isEditMode.value = true;
+      loadRoutine(props.routineId!);
+    }
+  });
 </script>
 
 <template>
