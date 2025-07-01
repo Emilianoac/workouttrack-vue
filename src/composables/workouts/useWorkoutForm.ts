@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 import { useAuth } from "@/composables/auth/useAuth";
-import { workoutLogSchema } from "@/schemas/workoutRegistrationSchema";
+import { workoutLogSchema } from "@/schemas/workoutFormSchema";
 import { useFormValidation } from "@/composables/useFormValidation";
 import { buildWorkoutLogPayload, buildSetLogsPayload } from "@/services/workout/workoutPayloadBuilder";
 import {
