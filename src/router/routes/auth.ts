@@ -41,7 +41,7 @@ export default [
       },
       {
         path: "cambiar-contrasena",
-        name: "auth-change-password",
+        name: "change-password",
         component: ResetPaswordView,
         meta: {
           menu: false,
