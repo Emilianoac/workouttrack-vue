@@ -3,6 +3,7 @@ import { type RouteRecordRaw } from "vue-router";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import LoginView from "@/views/Auth/LoginView.vue";
 import RegisterView from "@/views/Auth/RegisterView.vue";
+import ResetPaswordView from "@/views/Auth/ResetPasswordView.vue";
 
 export default [
   {
@@ -41,7 +42,7 @@ export default [
       {
         path: "cambiar-contrasena",
         name: "auth-change-password",
-        component: () => import("../../views/Auth/ResetPasswordView.vue"),
+        component: ResetPaswordView,
         meta: {
           menu: false,
           label: "Cambiar contraseña",
