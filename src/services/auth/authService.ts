@@ -72,7 +72,7 @@ export async function exchangeCodeForSessionService(url: string) {
 
 export async function sendResetPasswordEmailService(email: string, url?: string) {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: url || `${window.location.origin}/auth/reset-password`,
+    redirectTo: url || `${window.location.origin}/auth/cambiar-contrasena`,
   });
 
   if (error) {
